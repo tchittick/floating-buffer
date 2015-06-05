@@ -18,7 +18,7 @@ FloatingBuffer.prototype = {
   },
   readFloat8Bit: function(start, end, input, options){
     //Converts single octet to floating point of specified compenent lengths
-    var start, end, inpu
+    var start, end, input
     switch(args.length){
       case 0:
         start = 0;
