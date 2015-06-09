@@ -1,4 +1,5 @@
 var debug = require('debug')('proto')
+  , util = require('./floatUtil.js')
 
 var FloatingBuffer = function(buf, options){
   this.options = options || defaultOptions();
@@ -21,14 +22,14 @@ FloatingBuffer.prototype = {
   readFloat8Bit: function(start, input, options){
     //Converts single octet to floating point of specified compenent lengths
     debug('input', input);
-    var bin = this._makeWhole(input[start]);
+    var bin = util.makeWhole(input[start]);
     debug('bin', bin)
     var s, e, m, d;
 
     s = bin.charAt(0);
     e = parseInt(bin.substring(1,4),2) - 3;
     m = '1.' + bin.substring(4, 8);
-    d = this._shiftDot(m, e);
+    d = util.shiftDot(m, e);
 
     debug('tes', s)
     debug('tes', e)
@@ -79,53 +80,9 @@ FloatingBuffer.prototype = {
     }
     debug('balues', values)
     if(values.length){
-      return values.reduce(this._arraySum);
+      return values.reduce(util.arraySum);
     }
     return 0;
-  },
-  _arraySum: function(prev, curr, index, arr){
-    return prev + curr;
-  },
-  _makeWhole: function(buf){
-    //accept buffer of length == 1
-    debug('_makeWhole', buf);
-    var bin = buf.toString(2);
-    if(bin.length !== 8){
-      bin = this._prepend(bin);
-    }
-    return bin;
-  },
-  _prepend: function(bin){
-    var diff = 8 - bin.length;
-    var str = '';
-    for(var i=0; i<diff; i++){
-      str += '0'
-    }
-    return str + bin;
-  },
-  _shiftDot: function(m, e){
-    var str = '000000000000000' + m;
-    var dot = str.indexOf('.');
-    str = str.replace('.', '');
-
-    return parseFloat(str.substring(0, dot + e) + '.' + str.substring(dot + e));
-  }
-}
-
-function setArgs(args){
-  switch(args.length){
-    case 0:
-      break;
-    case 1:
-      break;
-    case 2:
-      break;
-    case 3:
-      break;
-    case 4:
-      break;
-    default:
-
   }
 }
 
