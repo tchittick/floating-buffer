@@ -1,1 +1,1 @@
-Current Placeholder
+A module intended for non-standard floating-points for node.js. Code works as intended with 8-bit floating points. Instead of continuing development for n-bit floating-points I have forked [feross/ieee754](https://github.com/feross/ieee754).
